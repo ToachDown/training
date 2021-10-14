@@ -64,40 +64,42 @@ public class MainTask {
     //            LuckyNumber.counter = 2;
     //        }
             //: TODO TASK 7
-    //        for(int i = 0; i < size; i++) {
-    //            int first = 1;
-    //            int second = 1;
-    //            int res = 1;
-    //            while (max >= res) {
-    //                if(res == array[i]) {
-    //                    System.out.println(array[i]);
-    //                }
-    //                res = first + second;
-    //                first = second;
-    //                second = res;
-    //            }
-    //        }
+//            int max = Arrays.stream(array).max().getAsInt();
+//            for(int i = 0; i < size; i++) {
+//                int first = 1;
+//                int second = 1;
+//                int res = 1;
+//                while (max >= res) {
+//                    if(res == array[i]) {
+//                        System.out.println("number Fibonacci: " + array[i]);
+//                    }
+//                    res = first + second;
+//                    first = second;
+//                    second = res;
+//                }
+//            }
             //:TODO TASK 8
     //        for(int i = 0; i < size; i++) {
     //            if(isPalindrome(array[i])) {
-    //                System.out.println("polidrome: " + array[i]);
+    //                System.out.println("polindrome: " + array[i]);
     //            }
     //        }
 
             //:TODO TASK 9
 //            findPeriodForFirstTwoPositiveNumbersInARow(array);
             //:TODO TASK 10
-            for(int k = 0; k < size; k++) {
-                if(array[k] > 0) {
-                    for (int i = 0; i < 10; i++) {
-                        for (int j = 0; j <= i; j++) {
-                            System.out.print(C(i, j, array[k]) + " ");
-                        }
-                        System.out.println();
-                    }
-                    return;
-                }
-            }
+//            System.out.println("triangle of Pascal");
+//            for(int k = 0; k < size; k++) {
+//                if(array[k] > 0) {
+//                    for (int i = 0; i < 10; i++) {
+//                        for (int j = 0; j <= i; j++) {
+//                            System.out.print(C(i, j, array[k]) + " ");
+//                        }
+//                        System.out.println();
+//                    }
+//                    return;
+//                }
+//            }
 
         }
 

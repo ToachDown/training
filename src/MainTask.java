@@ -1,107 +1,176 @@
-import java.util.Arrays;
-import java.util.OptionalInt;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class MainTask {
 
         public static void main(String[] args) {
-            //:TODO TASK 1-3
-            Scanner scan = new Scanner(System.in);
-            System.out.println("input size: ");
-            int size = scan.nextInt();
-            int[] array = new int[size];
-            for (int i = 0; i < size; i++) {
-                array[i] = scan.nextInt();
-            }
-    //        for (int i = 0; i < size; i++) {
-    //            if (array[i] % 2 == 0) {
-    //                System.out.println("Чётное: " + array[i]);
-    //            } else {
-    //                System.out.println("Не чётное: " + array[i]);
-    //            }
-    //            if (array[i] % 9 == 0) {
-    //                System.out.println("Кратное 9 и 3: " + array[i]);
-    //            } else if (array[i] % 3 == 0) {
-    //                System.out.println("Кратное 3: " + array[i]);
-    //            }
-    //            if (array[i] % 10 == 0) {
-    //                System.out.println("Кратное 10 и 5: " + array[i]);
-    //            } else if (array[i] % 5 == 0) {
-    //                System.out.println("Кратное 5: " + array[i]);
-    //            }
-    //        }
+            int[] array = inputArray();
+            //:TODO TASK 1
+//            outputEvenUneven(array);
+            //:TODO TASK 2
+//            outputMultipleNineOrThree(array);
+            //:TODO TASK 3
+//            outputMultipleTenOrFive(array);
             //:TODO TASK 4
-    //        int nod = array[0];
-    //        for (int i = 1; i < size; i++) {
-    //            nod = findNOD(nod, array[i]);
-    //        }
-    //        System.out.println("NOD: " + nod);
-    //        int nok = array[0];
-    //        for (int i = 1; i < size; i++) {
-    //            nok = findNOK(nok, array[i]);
-    //        }
-    //        System.out.println("NOK: " + nok);
+//            outputArrayNODAndNOK(array);
             //:TODO TASK 5
-    //        for (int i = 0; i < size; i++) {
-    //            if(array[i] <= 2) {
-    //                continue;
-    //            }
-    //            boolean prime = true;
-    //            for (int j = 2; j < array[i]; j++) {
-    //                if(array[i] % j == 0 ) {
-    //                    prime = false;
-    //                }
-    //            }
-    //            if (prime) {
-    //                System.out.println("Простое число: " + array[i]);
-    //            }
-    //        }
-            //: TODO TASK 6
-    //        for(int i = 0; i < size; i++) {
-    //            if(LuckyNumber.isLucky(array[i])){
-    //                System.out.println(array[i]);
-    //            }
-    //            LuckyNumber.counter = 2;
-    //        }
-            //: TODO TASK 7
-//            int max = Arrays.stream(array).max().getAsInt();
-//            for(int i = 0; i < size; i++) {
-//                int first = 1;
-//                int second = 1;
-//                int res = 1;
-//                while (max >= res) {
-//                    if(res == array[i]) {
-//                        System.out.println("number Fibonacci: " + array[i]);
-//                    }
-//                    res = first + second;
-//                    first = second;
-//                    second = res;
-//                }
-//            }
+//            outputSimpleNumbers(array);
+            //:TODO TASK 6
+//            outputLuckyNumbers(array);
+            //:TODO TASK 7
+//            outputDigitFibonacci(array);
             //:TODO TASK 8
-    //        for(int i = 0; i < size; i++) {
-    //            if(isPalindrome(array[i])) {
-    //                System.out.println("polindrome: " + array[i]);
-    //            }
-    //        }
-
+//            outputPalindromes(array);
             //:TODO TASK 9
 //            findPeriodForFirstTwoPositiveNumbersInARow(array);
             //:TODO TASK 10
-//            System.out.println("triangle of Pascal");
-//            for(int k = 0; k < size; k++) {
-//                if(array[k] > 0) {
-//                    for (int i = 0; i < 10; i++) {
-//                        for (int j = 0; j <= i; j++) {
-//                            System.out.print(C(i, j, array[k]) + " ");
-//                        }
-//                        System.out.println();
-//                    }
-//                    return;
-//                }
-//            }
+//            outputTriangleOfPascal(array);
 
         }
+
+    public static void outputDigitFibonacci (int[] array) {
+        int max = Arrays.stream(array).max().getAsInt();
+        List<Integer> arrayFibonacci = new ArrayList<>();
+        int first = 1;
+        int second = 1;
+        int res = 1;
+        while (max >= res) {
+                arrayFibonacci.add(res);
+                res = first + second;
+                first = second;
+                second = res;
+        }
+        Arrays.stream(array)
+                .filter(number -> arrayFibonacci.contains(number))
+                .forEach(System.out::println);
+    }
+
+    public static void outputSimpleNumbers (int[] array) {
+        int max = Arrays.stream(array).max().getAsInt();
+        List<Integer> simpleNumber = IntStream.range(2, max)
+                .filter(number -> IntStream.range(2, number)
+                        .filter(numb -> number % numb == 0)
+                        .findFirst()
+                        .isEmpty()
+                )
+                .boxed()
+                .collect(Collectors.toList());
+        Arrays.stream(array)
+                .filter(number -> number > 2)
+                .filter(simpleNumber::contains)
+                .forEach(System.out::println);
+    }
+
+    public static int[] inputArray() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("input array size: ");
+        int size = scanner.nextInt();
+        int[] array = new int[size];
+        return Arrays.stream(array)
+                .map(x -> scanner.nextInt())
+                .toArray();
+    }
+
+    public static void outputEvenUneven (int[] array) {
+        Arrays.stream(array)
+                .forEach(number -> {
+                    if (number % 2 == 0) {
+                        System.out.println("Even: " + number);
+                    } else {
+                        System.out.println("Uneven: " + number);
+                    }
+                });
+    }
+
+    public static void outputMultipleNineOrThree (int[] array) {
+        Arrays.stream(array)
+                .filter(number -> number % 3 == 0)
+                .forEach(number -> {
+                    if(number % 9 == 0) {
+                        System.out.println("Multiple 9 and 3: " + number);
+                    } else {
+                        System.out.println("Multiple 3: " + number);
+                    }
+                });
+    }
+
+    public static void outputMultipleTenOrFive (int[] array) {
+        Arrays.stream(array)
+                .filter(number -> number % 5 == 0)
+                .forEach(number -> {
+                    if(number % 10 == 0) {
+                        System.out.println("Multiple 10 and 5: " + number);
+                    } else {
+                        System.out.println("Multiple 5: " + number);
+                    }
+                });
+    }
+
+    public static void outputArrayNODAndNOK (int[] array) {
+        int nod = array[0];
+        int nok = array[0];
+        for (int number : array) {
+            nod = findNOD(nod, number);
+            nok = findNOK(nok, number, nod);
+        }
+        System.out.println("NOK: " + nok + " NOD: " + nod);
+    }
+
+    public static void outputLuckyNumbers (int[] array) {
+        int counter = 2;
+        Arrays.stream(array)
+                .filter(number -> isLucky(number, counter))
+                .forEach(System.out::println);
+    }
+
+    private static boolean isLucky(int n, int counter) {
+       if (counter > n)
+           return true;
+       if (n % counter == 0)
+           return false;
+
+       int next_position = n - (n / counter);
+
+       counter++;
+       return isLucky(next_position, counter);
+    }
+
+    private static int findNOK(int a, int b, int nod) {
+        return (a*b)/ nod;
+    }
+
+    private static int findNOD(int a, int b){
+        if (b==0) return a;
+        return findNOD(b,a % b);
+    }
+
+    public static void outputPalindromes (int[] array) {
+        Arrays.stream(array)
+                .filter(MainTask::isPalindrome)
+                .forEach(System.out::println);
+    }
+
+    private static boolean isPalindrome (int a) {
+            String number = String.valueOf(a);
+            String reverse = new StringBuilder(number).reverse().toString();
+            return number.equals(reverse);
+    }
+
+    public static void outputTriangleOfPascal (int[] array) {
+        Arrays.stream(array)
+                .filter(number -> number > 0)
+                .findFirst()
+                .stream()
+                .forEach(number -> {
+                    for (int i = 0; i < 7; i++) {
+                        for (int j = 0; j <= i; j++) {
+                            System.out.print(advice(i, j, number) + " ");
+                        }
+                        System.out.println();
+                    }
+                });
+    }
 
     public static void findPeriodForFirstTwoPositiveNumbersInARow(int[] numbers) {
         String message = "find period: ";
@@ -116,55 +185,27 @@ public class MainTask {
         }
         int numerator = twoPositiveNumbers[0];
         int denominator = twoPositiveNumbers[1];
-        if (numerator % denominator == 0) {
+        if (numerator % denominator == 0) { // without period
             System.out.println(numerator / denominator + ".(0)");
             return;
         }
 
-        int step = denominator % 2;
-        int firstCounter = 0;
-        while (step == 0) {
-            denominator = denominator / 2;
-            step = denominator % 2;
-            firstCounter++;
-        }
-
-        step = denominator % 5;
-        int secondCounter = 0;
-        while (step == 0) {
-            denominator = denominator / 5;
-            step = denominator % 5;
-            secondCounter++;
-        }
-
         int length = 1;
         int r = 10;
-        while (r != 1) {
+        while (r != 1) {  // find length of period
             r = (10 * r) % denominator;
             if (r == 0) {
                 break;
             }
             length++;
         }
-        long beforePeriodLength;
-        if (secondCounter > firstCounter) {
-            beforePeriodLength = secondCounter;
-        } else {
-            beforePeriodLength = firstCounter;
-        }
-        denominator = twoPositiveNumbers[1];
-        System.out.print(message + numerator / denominator + ".");
-        numerator = numerator % denominator;
-        for (int i = 0; i < beforePeriodLength; i++) {
-            System.out.print((numerator * 10) / denominator);
-            numerator = (numerator * 10) % denominator;
-        }
-        System.out.print("(");
+
+        System.out.print("period = (");
         for (int i = 0; i < length; i++) {
             System.out.print((numerator * 10) / denominator);
             numerator = (numerator * 10) % denominator;
         }
-        System.out.print(") = " + twoPositiveNumbers[0] + " / " + twoPositiveNumbers[1] + "\n");
+        System.out.print(") ");
     }
 
     public static int[] findFirstTwoPositiveNumbersInARow(int[] sourceNumbers) {
@@ -179,60 +220,14 @@ public class MainTask {
         return twoPositiveNumbers;
     }
 
-
-        public static boolean isPalindrome(int a) {
-            int pol = a;
-            int reverse = 0;
-            while(pol != 0) {
-                int remaind = pol % 10;
-                reverse = reverse * 10 + remaind;
-                pol = pol / 10;
-            }
-            return a == reverse;
+    private static int advice (int row, int column, int base){
+        for (int i = row - column + 1; i <= row; i++) {
+            base *= i;
         }
 
-        private static int findNOK(int a, int b) {
-            return (a*b)/findNOD(a, b);
+        for (int i = 2; i <= column; i++) {
+            base /= i;
         }
-
-        private static int findNOD(int a, int b){
-            while (a != 0 && b != 0) {
-                if(a > b) {
-                    a = a % b;
-                } else {
-                    b = b % a;
-                }
-            }
-            return (a + b);
-        }
-
-        private static class LuckyNumber {
-
-            public static int counter = 2;
-
-            static boolean isLucky(int a) {
-                if (counter > a) {
-                   return true;
-                }
-                if(a % counter == 0) {
-                   return false;
-                }
-
-                int nextPos = a - (a/counter);
-
-                counter++;
-                return isLucky(nextPos);
-            }
-        }
-
-    private static long C (int n,int k, int res){
-        for (int i = n - k + 1; i <= n; i++) {
-            res *= i;
-        }
-
-        for (int i = 2; i <= k; i++) {
-            res /= i;
-        }
-        return res;
+        return base;
     }
 }

@@ -12,5 +12,11 @@ public class Building {
         this.elevator = elevator;
     }
 
+    public List<Floor> getFloors() {
+        return floors;
+    }
 
+    public Elevator getElevator() {
+        return elevator;
+    }
 }

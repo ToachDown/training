@@ -1,9 +1,7 @@
 package taskElevator.entities;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Elevator {
 
@@ -18,9 +16,10 @@ public class Elevator {
         this.capacity = capacity;
         this.numberCurrentRoom = numberCurrentRoom;
         this.movementDirection = movementDirection;
+        this.passengers = new ArrayList<>();
     }
 
-    public static enum MovementDirection {
+    public enum MovementDirection {
         UP,
         DOWN
     }
@@ -34,50 +33,32 @@ public class Elevator {
     }
 
     public void removePassengers(List<Passenger> passengers) {
-        if(this.passengers.containsAll(passengers)) {
-            this.passengers.removeAll(passengers);
-        } else {
-            this.passengers.removeAll(
-                    passengers.stream()
-                            .filter(passenger -> this.passengers.contains(passenger))
-                            .collect(Collectors.toList())
-            );
-        }
+        this.passengers.removeAll(passengers);
     }
 
-    public List<Passenger> addPassengers (List<Passenger> passengers) {
-        if(passengers.size() + this.passengers.size() > capacity) {
-            var successEntered = passengers.stream()
-                    .limit(capacity - this.passengers.size())
-                    .collect(Collectors.toList());
-            this.passengers.addAll(successEntered);
-            return passengers.stream()
-                    .filter(passenger -> !successEntered.contains(passenger))
-                    .collect(Collectors.toList());
-        } else {
-            this.passengers.addAll(passengers);
-            return Collections.emptyList();
-        }
+    public int getCapacity() {
+        return capacity;
     }
 
-    public void move () {
-        if(numberTopFloor == numberCurrentRoom) {
-            movementDirection = MovementDirection.DOWN;
-            numberCurrentRoom--;
-            return;
-        }
-        if(numberCurrentRoom == 1) {
-            movementDirection = MovementDirection.UP;
-            numberCurrentRoom++;
-            return;
-        }
-        if(movementDirection.toString().equals(MovementDirection.UP)) {
-            numberCurrentRoom++;
-            return;
-        }
-        if(movementDirection.toString().equals(MovementDirection.DOWN)) {
-            numberCurrentRoom--;
-            return;
-        }
+    public List<Passenger> getPassengers() {
+        return passengers;
     }
+
+    public void changeNumberCurrentFloor (int number) {
+        this.numberCurrentRoom = number;
+    }
+
+    public int getNumberTopFloor() {
+        return numberTopFloor;
+    }
+
+    public void addPassengers (List<Passenger> passengers) {
+       this.passengers.addAll(passengers);
+    }
+
+    public MovementDirection getMovementDirection() {
+        return movementDirection;
+    }
+
+
 }

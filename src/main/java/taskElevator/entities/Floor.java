@@ -1,5 +1,6 @@
 package taskElevator.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Floor {
@@ -11,6 +12,7 @@ public class Floor {
     public Floor(List<Passenger> dispatchContainer, int currentNumber) {
         this.dispatchContainer = dispatchContainer;
         this.currentNumber = currentNumber;
+        this.arrivalContainer = new ArrayList<>();
     }
 
     public void addArrivalPassengers (List<Passenger> passengers) {
@@ -21,16 +23,12 @@ public class Floor {
         return currentNumber;
     }
 
-    public void addArrivalPassengers (Passenger passenger) {
-        arrivalContainer.add(passenger);
-    }
-
     public void leaveFloor (List<Passenger> passengers) {
-        arrivalContainer.removeAll(passengers);
+        dispatchContainer.removeAll(passengers);
     }
 
-    public void leaveFloor (Passenger passenger) {
-        arrivalContainer.remove(passenger);
+    public List<Passenger> getDispatchContainer() {
+        return dispatchContainer;
     }
 
     @Override

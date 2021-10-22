@@ -9,7 +9,7 @@ public class Passenger {
     private int numberDestinationFloor;
     private TransportationState state;
 
-    public static enum TransportationState {
+    public enum TransportationState {
         NOT_STARTED,
         IN_PROGRESS,
         COMPLETED
@@ -19,7 +19,16 @@ public class Passenger {
         this.id = UUID.randomUUID().toString();
         this.numberSourceFloor = numberSourceFloor;
         this.numberDestinationFloor = numberDestinationFloor;
-        this.state = TransportationState.NOT_STARTED;
+        this.state = TransportationState.IN_PROGRESS;
+    }
+
+    public Passenger changeState (TransportationState state) {
+        this.state = state;
+        return this;
+    }
+
+    public TransportationState getState() {
+        return state;
     }
 
     public int getNumberSourceFloor() {
@@ -30,9 +39,6 @@ public class Passenger {
         return numberDestinationFloor;
     }
 
-    public void changeState (TransportationState state) {
-        this.state = state;
-    }
 
     @Override
     public String toString() {

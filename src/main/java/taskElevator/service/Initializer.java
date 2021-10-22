@@ -1,34 +1,39 @@
 package taskElevator.service;
 
+import taskElevator.entities.Building;
 import taskElevator.entities.Elevator;
 import taskElevator.entities.Floor;
 import taskElevator.entities.Passenger;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Initializer {
 
-    private PropertiesReader reader;
-
-    private List<Passenger> initPassengers;
-    private List<Floor> initFloors;
+    private PropertiesHandler propsHandler;
 
     public Initializer() throws IOException {
-        reader = new PropertiesReader("src/main/resources/config.properties");
+        propsHandler = new PropertiesHandler();
+        propsHandler.enableFileLogging();
     }
 
-    public void init() {
-        initialFloors();
+    public Building initStructure () {
+        return new Building(initialFloors(), initialElevator());
     }
 
-    public void initialFloors () {
+    public List<Passenger> FloorsToPassengerList(List<Floor> floors) {
+        return floors.stream()
+                .map(floor -> floor.getDispatchContainer())
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+    }
+
+    private List<Floor> initialFloors () {
         var passengers = initialPersons();
-        var floors = IntStream.range(1, reader.getCountFloors() + 1)
+        return IntStream.range(1, propsHandler.getCountFloors() + 1)
                 .boxed()
                 .map(numberFloor -> {
                     var currentFloorPassenger = passengers.stream()
@@ -39,14 +44,23 @@ public class Initializer {
                 .collect(Collectors.toList());
     }
 
-    public List<Passenger> initialPersons () {
-        return IntStream.range(0, reader.getPassengersCount())
+    private Elevator initialElevator () {
+        return new Elevator(
+                initialFloors().size(),
+                propsHandler.getElevatorCapacity(),
+                1,
+                Elevator.MovementDirection.UP
+        );
+    }
+
+    private List<Passenger> initialPersons () {
+        return IntStream.range(0, propsHandler.getPassengersCount())
                 .boxed()
                 .map(x -> {
                     var random = new Random();
-                    var sourceNumb = random.nextInt(reader.getCountFloors()) + 1;
-                    var index = random.nextInt(reader.getCountFloors() - 1);
-                    var destinationNumb = IntStream.range(1, reader.getCountFloors() + 1)
+                    var sourceNumb = random.nextInt(propsHandler.getCountFloors()) + 1;
+                    var index = random.nextInt(propsHandler.getCountFloors() - 1);
+                    var destinationNumb = IntStream.range(1, propsHandler.getCountFloors() + 1)
                             .filter(numb -> numb != sourceNumb)
                             .toArray()[index];
                     var p = new Passenger(sourceNumb, destinationNumb);

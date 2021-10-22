@@ -35,6 +35,7 @@ public class ElevatorMovementTask implements Runnable{
     @Override
     public void run() {
         try {
+            Thread.sleep(1000);
             while (true) {
                 Thread.sleep(200);
                 LOGGER.log(INFO, "elevator stopped");
@@ -69,8 +70,13 @@ public class ElevatorMovementTask implements Runnable{
                                 elevator.getMovementDirection().toString(),
                                 String.valueOf(elevator.getNumberCurrentFloor())
                 });
-
+                var hasPassengers= floors.stream().anyMatch(floor -> !floor.getDispatchContainer().isEmpty());
+                if(elevator.getPassengers().isEmpty() && !hasPassengers) {
+                    LOGGER.log(INFO, "elevator end work");
+                    break;
+                }
             }
+            Thread.currentThread().interrupt();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

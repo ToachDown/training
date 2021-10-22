@@ -23,6 +23,10 @@ public class Floor {
         return currentNumber;
     }
 
+    public List<Passenger> getArrivalContainer() {
+        return arrivalContainer;
+    }
+
     public void leaveFloor (List<Passenger> passengers) {
         dispatchContainer.removeAll(passengers);
     }

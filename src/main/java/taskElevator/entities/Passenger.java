@@ -19,7 +19,7 @@ public class Passenger {
         this.id = UUID.randomUUID().toString();
         this.numberSourceFloor = numberSourceFloor;
         this.numberDestinationFloor = numberDestinationFloor;
-        this.state = TransportationState.IN_PROGRESS;
+        this.state = TransportationState.NOT_STARTED;
     }
 
     public Passenger changeState (TransportationState state) {

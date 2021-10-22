@@ -18,8 +18,9 @@ public class MainPlace {
         var executorElevator = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
         var executorPassengers = (ThreadPoolExecutor) Executors.newFixedThreadPool(passengers.size());
 
-        var elevatorMovementTask = new ElevatorMovementTask(building);
-        executorElevator.execute(elevatorMovementTask);
-        passengers.forEach(passenger -> executorPassengers.execute(new TransportationPassengerTask(passenger)));
+        passengers.forEach(passenger -> executorPassengers.execute(new TransportationPassengerTask(passenger, building)));
+        executorElevator.execute(new ElevatorMovementTask(building));
+        executorElevator.shutdown();
+        executorPassengers.shutdown();
     }
 }

@@ -8,10 +8,15 @@ import taskElevator.entities.Passenger;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Initializer {
+
+    private static final Logger LOGGER = Logger.getLogger("INITIALIZER");
+
+    private List<Floor> floors;
 
     private PropertiesHandler propsHandler;
 
@@ -33,7 +38,8 @@ public class Initializer {
 
     private List<Floor> initialFloors () {
         var passengers = initialPersons();
-        return IntStream.range(1, propsHandler.getCountFloors() + 1)
+        LOGGER.log(MyLogLevel.STARTING_TRANSPORTATION, "filling {0} floors with passengers...", PropertiesHandler.getCountFloors());
+        floors = IntStream.range(1, propsHandler.getCountFloors() + 1)
                 .boxed()
                 .map(numberFloor -> {
                     var currentFloorPassenger = passengers.stream()
@@ -42,11 +48,13 @@ public class Initializer {
                     return new Floor(currentFloorPassenger ,numberFloor);
                 })
                 .collect(Collectors.toList());
+        return floors;
     }
 
     private Elevator initialElevator () {
+        LOGGER.log(MyLogLevel.STARTING_TRANSPORTATION, "create elevator with {0} seats...", PropertiesHandler.getElevatorCapacity());
         return new Elevator(
-                initialFloors().size(),
+                floors.size(),
                 propsHandler.getElevatorCapacity(),
                 1,
                 Elevator.MovementDirection.UP
@@ -54,6 +62,7 @@ public class Initializer {
     }
 
     private List<Passenger> initialPersons () {
+        LOGGER.log(MyLogLevel.STARTING_TRANSPORTATION, "create {0} passengers...", PropertiesHandler.getPassengersCount());
         return IntStream.range(0, propsHandler.getPassengersCount())
                 .boxed()
                 .map(x -> {

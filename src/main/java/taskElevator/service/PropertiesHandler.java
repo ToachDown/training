@@ -20,7 +20,7 @@ public class PropertiesHandler {
 
     private String propertiesPath = "src/main/resources/config.properties";
     private String loggerPath = "/logger.properties";
-    private Properties properties;
+    private static Properties properties;
 
     public PropertiesHandler() throws IOException {
         properties = readProperties(propertiesPath);
@@ -52,15 +52,15 @@ public class PropertiesHandler {
         }
     }
 
-    public int getCountFloors() {
+    public static int getCountFloors() {
         return Integer.parseInt(properties.getProperty("floorsNumber"));
     }
 
-    public int getElevatorCapacity () {
+    public static int getElevatorCapacity () {
         return Integer.parseInt(properties.getProperty("elevatorCapacity"));
     }
 
-    public int getPassengersCount () {
+    public static int getPassengersCount () {
         return Integer.parseInt(properties.getProperty("passengersNumber"));
     }
 

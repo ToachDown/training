@@ -27,6 +27,10 @@ public class Passenger {
         return this;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public TransportationState getState() {
         return state;
     }

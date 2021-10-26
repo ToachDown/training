@@ -15,8 +15,8 @@ public class MainPlace {
         var building = initializer.initStructure();
         var passengers = initializer.FloorsToPassengerList(building.getFloors());
 
-        var executorElevator = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
-        var executorPassengers = (ThreadPoolExecutor) Executors.newFixedThreadPool(passengers.size());
+        var executorElevator = Executors.newFixedThreadPool(1);
+        var executorPassengers = Executors.newFixedThreadPool(passengers.size());
 
         passengers.forEach(passenger ->
                 executorPassengers.execute(new TransportationPassengerTask(passenger, building)));

@@ -69,7 +69,7 @@ public class Controller {
         var allCompletedPassengers = floors.stream()
                 .map(Floor::getArrivalContainer)
                 .flatMap(List::stream)
-                .filter(passenger -> passenger.getState().toString().equals(Passenger.TransportationState.COMPLETED.toString()))
+                .filter(passenger -> passenger.getState().equals(Passenger.TransportationState.COMPLETED))
                 .count();
         var isAllPassengersOnHisFloor = floors.stream()
                 .anyMatch(floor -> floor.getArrivalContainer()
@@ -89,7 +89,7 @@ public class Controller {
     public List<Passenger> getSeatedPassengers (Floor floor, Elevator elevator) {
         return floor.getDispatchContainer()
                 .stream()
-                .filter(passenger -> passenger.getState().toString().equals(Passenger.TransportationState.IN_PROGRESS.toString()))
+                .filter(passenger -> passenger.getState().equals(Passenger.TransportationState.IN_PROGRESS))
                 .limit(elevator.getCapacity() - elevator.getPassengers().size())
                 .collect(Collectors.toList());
     }

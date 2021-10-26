@@ -6,13 +6,8 @@ import taskElevator.entities.Passenger;
 import taskElevator.service.Controller;
 
 import java.util.List;
-import java.util.logging.Logger;
-
-import static java.util.logging.Level.INFO;
 
 public class TransportationPassengerTask implements Runnable{
-
-    private Logger LOGGER = Logger.getLogger("Passengers");
 
     private List<Floor> floors;
     private Passenger passenger;

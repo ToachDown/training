@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class MainPlace {
 
     public static void main(String[] args) throws IOException {
-        var initializer = new Initializer();
+        var initializer = new Initializer("src/main/resources/config.properties");
         var building = initializer.initStructure();
         var passengers = initializer.FloorsToPassengerList(building.getFloors());
 

@@ -18,11 +18,10 @@ public class PropertiesHandler {
 
     private static Logger LOGGER = Logger.getLogger("PROPERTIES");
 
-    private String propertiesPath = "src/main/resources/config.properties";
     private String loggerPath = "/logger.properties";
     private static Properties properties;
 
-    public PropertiesHandler() throws IOException {
+    public PropertiesHandler(String propertiesPath) throws IOException {
         properties = readProperties(propertiesPath);
     }
 

@@ -20,8 +20,8 @@ public class Initializer {
 
     private PropertiesHandler propsHandler;
 
-    public Initializer() throws IOException {
-        propsHandler = new PropertiesHandler();
+    public Initializer(String propertiesPath) throws IOException {
+        propsHandler = new PropertiesHandler(propertiesPath);
         propsHandler.enableFileLogging();
     }
 
@@ -31,7 +31,7 @@ public class Initializer {
 
     public List<Passenger> FloorsToPassengerList(List<Floor> floors) {
         return floors.stream()
-                .map(floor -> floor.getDispatchContainer())
+                .map(Floor::getDispatchContainer)
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
